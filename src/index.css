@@ -2,17 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  /* Evita el scroll rebotador y ajusta el área segura del iPhone (notch / barra de inicio) */
+@layer base {
   html, body {
     @apply bg-slate-950 text-slate-100 antialiased select-none;
     -webkit-tap-highlight-color: transparent;
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
 }
 
-/* Evita que Safari en iOS haga zoom automático cuando tocás un input */
+/* Evita que Safari en iOS haga zoom automático molesto cuando tocás un input */
 input {
   font-size: 16px !important;
+}
+
+/* Ocultar las flechas de los inputs de número para que no rompan el diseño mobile */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
