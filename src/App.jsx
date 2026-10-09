@@ -1,54 +1,367 @@
 import React, { useState, useEffect } from 'react'
 
 export default function App() {
-  // Estado para el día seleccionado
   const [selectedDay, setSelectedDay] = useState('Martes')
-
-  // Estado del temporizador
   const [isTraining, setIsTraining] = useState(false)
   const [workoutSeconds, setWorkoutSeconds] = useState(0)
 
-  // Estado con la rutina de ejercicios por día
+  // Datos completos de tu rutina semanal
   const [workoutData, setWorkoutData] = useState({
     Martes: [
       {
-        id: 'ex-1',
-        name: 'Press Inclinado',
+        id: 'mar-1',
+        name: 'Inclinado',
         muscle: 'Pecho',
         sets: [
-          { weight: '22.5 kg/lado', reps: '8', rir: 'RIR 0' },
-          { weight: '22.5 kg/lado', reps: '8', rir: 'RIR 0' },
-          { weight: '22.5 kg/lado', reps: '8', rir: 'Fallo' }
+          { weight: '10kg/lado', reps: 'Calentamiento', rir: '' },
+          { weight: '22.5kg/lado', reps: '8', rir: 'RIR 0' },
+          { weight: '22.5kg/lado', reps: '8', rir: 'RIR 0' }
         ]
       },
       {
-        id: 'ex-2',
+        id: 'mar-2',
         name: 'Peck Deck',
         muscle: 'Pecho',
         sets: [
-          { weight: '60 kg', reps: '8', rir: 'RIR 0' },
-          { weight: '60 kg', reps: '8', rir: 'RIR 0' },
-          { weight: '60 kg', reps: '8', rir: 'Fallo' }
+          { weight: '60kg', reps: '9', rir: 'Fallo' },
+          { weight: '55kg', reps: '6', rir: 'Fallo' }
         ]
       },
       {
-        id: 'ex-3',
-        name: 'Laterales en Polea',
+        id: 'mar-3',
+        name: 'Laterales en polea',
         muscle: 'Hombro',
         sets: [
-          { weight: '2 ladrillos', reps: '8', rir: 'RIR 0' },
-          { weight: '2 ladrillos', reps: '8', rir: 'RIR 0' },
+          { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
+          { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
+          { weight: '2 ladrillos', reps: '9', rir: 'Fallo' }
+        ]
+      },
+      {
+        id: 'mar-4',
+        name: 'Tricep polea media/baja',
+        muscle: 'Tríiceps',
+        sets: [
+          { weight: '30kg', reps: '9', rir: 'Fallo' },
+          { weight: '30kg', reps: '7', rir: 'Fallo' }
+        ]
+      },
+      {
+        id: 'mar-5',
+        name: 'Tricep polea alta',
+        muscle: 'Tríiceps',
+        sets: [
+          { weight: '3 ladrillos', reps: '6', rir: 'Fallo' },
+          { weight: '2 ladrillos', reps: '8', rir: 'Fallo' },
           { weight: '2 ladrillos', reps: '8', rir: 'Fallo' }
+        ]
+      },
+      {
+        id: 'mar-6',
+        name: 'Abs polea alta',
+        muscle: 'Abdomen',
+        sets: [
+          { weight: '50kg', reps: '15', rir: 'Fallo' },
+          { weight: '50kg', reps: '15', rir: 'Fallo' }
         ]
       }
     ],
-    Miércoles: [],
-    Jueves: [],
-    Viernes: [],
-    Sábado: []
+    Miércoles: [
+      {
+        id: 'mie-1',
+        name: 'Máquina gemelos',
+        muscle: 'Gemelos',
+        sets: [
+          { weight: '40kg', reps: '', rir: '' },
+          { weight: '70kg', reps: '', rir: '' },
+          { weight: '70kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'mie-2',
+        name: 'Máquina aductores',
+        muscle: 'Aductores',
+        sets: [
+          { weight: '30kg', reps: '', rir: '' },
+          { weight: '40kg', reps: '', rir: '' },
+          { weight: '40kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'mie-3',
+        name: 'Sillón cuádriceps',
+        muscle: 'Cuádriceps',
+        sets: [
+          { weight: '50kg', reps: '', rir: '' },
+          { weight: '80kg', reps: '', rir: '' },
+          { weight: '80kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'mie-4',
+        name: 'Péndulo',
+        muscle: 'Cuádriceps',
+        sets: [
+          { weight: '20kg', reps: '', rir: '' },
+          { weight: '20kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'mie-5',
+        name: 'Máquina isquios sentado',
+        muscle: 'Isquios',
+        sets: [
+          { weight: '50kg', reps: '', rir: '' },
+          { weight: '70kg', reps: '', rir: '' },
+          { weight: '70kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'mie-6',
+        name: 'Abs polea alta',
+        muscle: 'Abdomen',
+        sets: [
+          { weight: '50kg', reps: '15', rir: 'Fallo' },
+          { weight: '50kg', reps: '15', rir: 'Fallo' }
+        ]
+      }
+    ],
+    Jueves: [
+      {
+        id: 'jue-1',
+        name: 'Pullover en máquina',
+        muscle: 'Espalda',
+        sets: [
+          { weight: '25kg/lado', reps: '', rir: '' },
+          { weight: '45kg/lado', reps: '', rir: '' },
+          { weight: '45kg/lado', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'jue-2',
+        name: 'Jalón al pecho agarre cerrado',
+        muscle: 'Espalda',
+        sets: [
+          { weight: '65kg', reps: '', rir: '' },
+          { weight: '65kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'jue-3',
+        name: 'Barra T',
+        muscle: 'Espalda',
+        sets: [
+          { weight: '35kg', reps: '', rir: '' },
+          { weight: '35kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'jue-4',
+        name: 'Curl predicador en máquina',
+        muscle: 'Bíceps',
+        sets: [
+          { weight: '20kg', reps: '', rir: '' },
+          { weight: '30kg', reps: '', rir: '' },
+          { weight: '30kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'jue-5',
+        name: 'Bicep alternado sentado',
+        muscle: 'Bíceps',
+        sets: [
+          { weight: '15kg/lado', reps: '', rir: '' },
+          { weight: '15kg/lado', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'jue-6',
+        name: 'Laterales en polea',
+        muscle: 'Hombro',
+        sets: [
+          { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
+          { weight: '2 ladrillos', reps: '9', rir: 'Fallo' }
+        ]
+      },
+      {
+        id: 'jue-7',
+        name: 'Antebrazo polea baja',
+        muscle: 'Antebrazo',
+        sets: [
+          { weight: '25kg', reps: '', rir: '' },
+          { weight: '25kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'jue-8',
+        name: 'Antebrazo polea alta',
+        muscle: 'Antebrazo',
+        sets: [
+          { weight: '50kg', reps: '', rir: '' },
+          { weight: '50kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'jue-9',
+        name: 'Abs polea alta',
+        muscle: 'Abdomen',
+        sets: [
+          { weight: '50kg', reps: '15', rir: 'Fallo' },
+          { weight: '50kg', reps: '15', rir: 'Fallo' }
+        ]
+      }
+    ],
+    Viernes: [
+      {
+        id: 'vie-1',
+        name: 'Máquina gemelos',
+        muscle: 'Gemelos',
+        sets: [
+          { weight: '40kg', reps: '', rir: '' },
+          { weight: '70kg', reps: '', rir: '' },
+          { weight: '70kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'vie-2',
+        name: 'Máquina aductores',
+        muscle: 'Aductores',
+        sets: [
+          { weight: '30kg', reps: '', rir: '' },
+          { weight: '40kg', reps: '', rir: '' },
+          { weight: '40kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'vie-3',
+        name: 'Isquios parado',
+        muscle: 'Isquios',
+        sets: [
+          { weight: '10kg/lado', reps: '', rir: '' },
+          { weight: '20kg/lado', reps: '', rir: '' },
+          { weight: '20kg/lado', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'vie-4',
+        name: 'Máquina isquios sentado',
+        muscle: 'Isquios',
+        sets: [
+          { weight: '70kg', reps: '', rir: '' },
+          { weight: '70kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'vie-5',
+        name: 'Sillón cuádriceps',
+        muscle: 'Cuádriceps',
+        sets: [
+          { weight: '50kg', reps: '', rir: '' },
+          { weight: '80kg', reps: '', rir: '' },
+          { weight: '80kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'vie-6',
+        name: 'Abs polea alta',
+        muscle: 'Abdomen',
+        sets: [
+          { weight: '50kg', reps: '15', rir: 'Fallo' },
+          { weight: '50kg', reps: '15', rir: 'Fallo' }
+        ]
+      }
+    ],
+    Sábado: [
+      {
+        id: 'sab-1',
+        name: 'Inclinado',
+        muscle: 'Pecho',
+        sets: [
+          { weight: '10kg/lado', reps: 'Calentamiento', rir: '' },
+          { weight: '22.5kg/lado', reps: '8', rir: 'RIR 0' },
+          { weight: '22.5kg/lado', reps: '8', rir: 'RIR 0' }
+        ]
+      },
+      {
+        id: 'sab-2',
+        name: 'Jalón al pecho agarre cerrado',
+        muscle: 'Espalda',
+        sets: [
+          { weight: '40kg', reps: '', rir: '' },
+          { weight: '65kg', reps: '', rir: '' },
+          { weight: '65kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'sab-3',
+        name: 'Peck Deck',
+        muscle: 'Pecho',
+        sets: [
+          { weight: '60kg', reps: '9', rir: 'Fallo' },
+          { weight: '55kg', reps: '6', rir: 'Fallo' }
+        ]
+      },
+      {
+        id: 'sab-4',
+        name: 'Barra T',
+        muscle: 'Espalda',
+        sets: [
+          { weight: '35kg', reps: '', rir: '' },
+          { weight: '35kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'sab-5',
+        name: 'Laterales en polea',
+        muscle: 'Hombro',
+        sets: [
+          { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
+          { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
+          { weight: '2 ladrillos', reps: '9', rir: 'Fallo' }
+        ]
+      },
+      {
+        id: 'sab-6',
+        name: 'Tricep polea media/baja',
+        muscle: 'Tríiceps',
+        sets: [
+          { weight: '20kg', reps: '', rir: '' },
+          { weight: '30kg', reps: '9', rir: 'Fallo' },
+          { weight: '30kg', reps: '7', rir: 'Fallo' }
+        ]
+      },
+      {
+        id: 'sab-7',
+        name: 'Curl predicador en máquina',
+        muscle: 'Bíceps',
+        sets: [
+          { weight: '20kg', reps: '', rir: '' },
+          { weight: '30kg', reps: '', rir: '' },
+          { weight: '30kg', reps: '', rir: '' }
+        ]
+      },
+      {
+        id: 'sab-8',
+        name: 'Abs polea alta',
+        muscle: 'Abdomen',
+        sets: [
+          { weight: '50kg', reps: '15', rir: 'Fallo' },
+          { weight: '50kg', reps: '15', rir: 'Fallo' }
+        ]
+      }
+    ]
   })
 
-  // Timer para controlar la duración del entrenamiento
+  // Nombres descriptivos de las rutinas por día
+  const dayTitles = {
+    Martes: 'Pecho, Hombros y Tríceps',
+    Miércoles: 'Pierna Completa',
+    Jueves: 'Espalda, Bíceps y Antebrazo',
+    Viernes: 'Pierna y Enfoque Isquios',
+    Sábado: 'Torso Completo'
+  }
+
+  // Timer del entrenamiento
   useEffect(() => {
     let interval = null
     if (isTraining) {
@@ -61,19 +374,16 @@ export default function App() {
     return () => clearInterval(interval)
   }, [isTraining])
 
-  // Formatear segundos a MM:SS
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
 
-  // Alternar inicio / pausa de entrenamiento
   const toggleTraining = () => {
     setIsTraining(!isTraining)
   }
 
-  // Actualizar valores de las series (Carga, Reps, RIR)
   const updateSet = (exerciseId, setIndex, field, value) => {
     setWorkoutData((prevData) => {
       const currentDayData = prevData[selectedDay] || []
@@ -95,7 +405,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col pb-12 safe-bottom">
-      {/* 1. Header Fijo superior */}
+      {/* Header Fijo */}
       <header className="px-4 pt-3 pb-2 bg-slate-950/80 backdrop-blur-md sticky top-0 z-30 border-b border-slate-900/60 flex flex-col gap-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
@@ -108,8 +418,8 @@ export default function App() {
           <button
             onClick={toggleTraining}
             className={`flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm shadow-md transition-transform active:scale-95 ${
-              isTraining 
-                ? 'bg-red-500 text-white hover:bg-red-600' 
+              isTraining
+                ? 'bg-red-500 text-white hover:bg-red-600'
                 : 'bg-white text-slate-950 hover:bg-slate-200'
             }`}
           >
@@ -118,7 +428,7 @@ export default function App() {
           </button>
         </div>
 
-        {/* Selector de días tipo "Pills" */}
+        {/* Selector de Días */}
         <div className="flex gap-2 overflow-x-auto no-scrollbar py-1">
           {['Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'].map((day) => (
             <button
@@ -136,22 +446,20 @@ export default function App() {
         </div>
       </header>
 
-      {/* Cuerpo principal */}
+      {/* Contenido Principal */}
       <main className="flex-1 px-4 py-4 flex flex-col gap-6 max-w-md mx-auto w-full">
-        {/* Título de la rutina */}
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-white">Pecho, Hombros y Tríceps</h1>
+          <h1 className="text-2xl font-black tracking-tight text-white">{dayTitles[selectedDay]}</h1>
           <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mt-1">{selectedDay}</p>
         </div>
 
-        {/* Tarjetas de Ejercicios */}
+        {/* Lista de Ejercicios */}
         <div className="flex flex-col gap-5">
           {workoutData[selectedDay]?.map((exercise) => (
             <div
               key={exercise.id}
               className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 shadow-xl flex flex-col gap-4 backdrop-blur-sm"
             >
-              {/* Encabezado del ejercicio */}
               <div className="flex justify-between items-start gap-3">
                 <div>
                   <h3 className="font-bold text-lg text-white tracking-tight leading-tight">
@@ -162,15 +470,13 @@ export default function App() {
                   </span>
                 </div>
 
-                {/* Botón de descanso más compacto */}
                 <button className="flex items-center gap-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/10 px-3 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all">
                   <span>⏱</span> 90s Rest
                 </button>
               </div>
 
-              {/* Grid de Series */}
+              {/* Filas de Series */}
               <div className="flex flex-col gap-3">
-                {/* Encabezado de columnas alineado */}
                 <div className="grid grid-cols-12 gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">
                   <span className="col-span-2 text-center">SERIE</span>
                   <span className="col-span-4 text-center">CARGA</span>
@@ -178,18 +484,15 @@ export default function App() {
                   <span className="col-span-3 text-center">RIR</span>
                 </div>
 
-                {/* Filas de series */}
                 {exercise.sets.map((set, index) => (
                   <div
                     key={index}
                     className="grid grid-cols-12 gap-2 items-center bg-slate-950/40 p-1.5 rounded-xl border border-slate-900/50"
                   >
-                    {/* Número de Serie */}
                     <span className="col-span-2 text-center font-bold text-xs text-slate-400">
                       S{index + 1}
                     </span>
 
-                    {/* Input Carga */}
                     <div className="col-span-4 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-2 flex items-center justify-between focus-within:border-blue-500/50">
                       <input
                         type="text"
@@ -200,11 +503,9 @@ export default function App() {
                       />
                     </div>
 
-                    {/* Input Reps */}
                     <div className="col-span-3 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-1 focus-within:border-blue-500/50">
                       <input
-                        type="number"
-                        inputMode="numeric"
+                        type="text"
                         placeholder="0"
                         value={set.reps || ''}
                         onChange={(e) => updateSet(exercise.id, index, 'reps', e.target.value)}
@@ -212,7 +513,6 @@ export default function App() {
                       />
                     </div>
 
-                    {/* Input RIR / Fallo */}
                     <div className="col-span-3 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-1 focus-within:border-blue-500/50">
                       <input
                         type="text"
