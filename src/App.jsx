@@ -1,7 +1,97 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 export default function App() {
-  // ... (aquí van tus hooks, dejalos como los tenías: useState de activeDay, workoutData, etc.)
+  // Estado para el día seleccionado
+  const [selectedDay, setSelectedDay] = useState('Martes')
+
+  // Estado del temporizador
+  const [isTraining, setIsTraining] = useState(false)
+  const [workoutSeconds, setWorkoutSeconds] = useState(0)
+
+  // Estado con la rutina de ejercicios por día
+  const [workoutData, setWorkoutData] = useState({
+    Martes: [
+      {
+        id: 'ex-1',
+        name: 'Press Inclinado',
+        muscle: 'Pecho',
+        sets: [
+          { weight: '22.5 kg/lado', reps: '8', rir: 'RIR 0' },
+          { weight: '22.5 kg/lado', reps: '8', rir: 'RIR 0' },
+          { weight: '22.5 kg/lado', reps: '8', rir: 'Fallo' }
+        ]
+      },
+      {
+        id: 'ex-2',
+        name: 'Peck Deck',
+        muscle: 'Pecho',
+        sets: [
+          { weight: '60 kg', reps: '8', rir: 'RIR 0' },
+          { weight: '60 kg', reps: '8', rir: 'RIR 0' },
+          { weight: '60 kg', reps: '8', rir: 'Fallo' }
+        ]
+      },
+      {
+        id: 'ex-3',
+        name: 'Laterales en Polea',
+        muscle: 'Hombro',
+        sets: [
+          { weight: '2 ladrillos', reps: '8', rir: 'RIR 0' },
+          { weight: '2 ladrillos', reps: '8', rir: 'RIR 0' },
+          { weight: '2 ladrillos', reps: '8', rir: 'Fallo' }
+        ]
+      }
+    ],
+    Miércoles: [],
+    Jueves: [],
+    Viernes: [],
+    Sábado: []
+  })
+
+  // Timer para controlar la duración del entrenamiento
+  useEffect(() => {
+    let interval = null
+    if (isTraining) {
+      interval = setInterval(() => {
+        setWorkoutSeconds((prev) => prev + 1)
+      }, 1000)
+    } else {
+      clearInterval(interval)
+    }
+    return () => clearInterval(interval)
+  }, [isTraining])
+
+  // Formatear segundos a MM:SS
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
+
+  // Alternar inicio / pausa de entrenamiento
+  const toggleTraining = () => {
+    setIsTraining(!isTraining)
+  }
+
+  // Actualizar valores de las series (Carga, Reps, RIR)
+  const updateSet = (exerciseId, setIndex, field, value) => {
+    setWorkoutData((prevData) => {
+      const currentDayData = prevData[selectedDay] || []
+      const updatedDayData = currentDayData.map((exercise) => {
+        if (exercise.id === exerciseId) {
+          const updatedSets = exercise.sets.map((set, idx) => {
+            if (idx === setIndex) {
+              return { ...set, [field]: value }
+            }
+            return set
+          })
+          return { ...exercise, sets: updatedSets }
+        }
+        return exercise
+      })
+      return { ...prevData, [selectedDay]: updatedDayData }
+    })
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col pb-12 safe-bottom">
@@ -11,16 +101,20 @@ export default function App() {
           <div className="flex items-center gap-2">
             <span className="text-red-500 animate-pulse text-lg">⏱</span>
             <span className="font-mono text-xl font-bold tracking-tight">
-              {/* Tu función de formateo de tiempo aquí: ej. formatTime(workoutSeconds) */}
-              00:00
+              {formatTime(workoutSeconds)}
             </span>
           </div>
-          
-          <button 
+
+          <button
             onClick={toggleTraining}
-            className="flex items-center gap-2 bg-white text-slate-950 px-4 py-2 rounded-full font-bold text-sm shadow-md hover:scale-95 transition-transform active:bg-slate-200"
+            className={`flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm shadow-md transition-transform active:scale-95 ${
+              isTraining 
+                ? 'bg-red-500 text-white hover:bg-red-600' 
+                : 'bg-white text-slate-950 hover:bg-slate-200'
+            }`}
           >
-            <span>▶</span> Iniciar Entrenamiento
+            <span>{isTraining ? '⏸' : '▶'}</span>
+            {isTraining ? 'Pausar' : 'Iniciar Entrenamiento'}
           </button>
         </div>
 
@@ -31,8 +125,8 @@ export default function App() {
               key={day}
               onClick={() => setSelectedDay(day)}
               className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                selectedDay === day 
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' 
+                selectedDay === day
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
                   : 'bg-slate-900 text-slate-400 border border-slate-800'
               }`}
             >
@@ -53,8 +147,8 @@ export default function App() {
         {/* Tarjetas de Ejercicios */}
         <div className="flex flex-col gap-5">
           {workoutData[selectedDay]?.map((exercise) => (
-            <div 
-              key={exercise.id} 
+            <div
+              key={exercise.id}
               className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 shadow-xl flex flex-col gap-4 backdrop-blur-sm"
             >
               {/* Encabezado del ejercicio */}
@@ -67,7 +161,7 @@ export default function App() {
                     {exercise.muscle}
                   </span>
                 </div>
-                
+
                 {/* Botón de descanso más compacto */}
                 <button className="flex items-center gap-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/10 px-3 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all">
                   <span>⏱</span> 90s Rest
@@ -86,8 +180,8 @@ export default function App() {
 
                 {/* Filas de series */}
                 {exercise.sets.map((set, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="grid grid-cols-12 gap-2 items-center bg-slate-950/40 p-1.5 rounded-xl border border-slate-900/50"
                   >
                     {/* Número de Serie */}
