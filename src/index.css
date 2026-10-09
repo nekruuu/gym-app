@@ -2,12 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #090d16;
-  color: #f3f4f6;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  -webkit-tap-highlight-color: transparent;
+@layer utilities {
+  /* Evita el scroll rebotador y ajusta el área segura del iPhone (notch / barra de inicio) */
+  html, body {
+    @apply bg-slate-950 text-slate-100 antialiased select-none;
+    -webkit-tap-highlight-color: transparent;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+/* Evita que Safari en iOS haga zoom automático cuando tocás un input */
+input {
+  font-size: 16px !important;
+}
