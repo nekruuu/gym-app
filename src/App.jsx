@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-// Rutina actualizada con todas las correcciones, variantes y abdominales al final
+// Rutina con variantes actualizadas para Barra T, Hombros y botón posicionado junto a Rest
 const initialWorkoutData = {
   Martes: [
     {
@@ -28,7 +28,7 @@ const initialWorkoutData = {
       id: 'mar-3',
       name: 'Laterales en polea',
       muscle: 'Hombro',
-      variants: ['Laterales en polea', 'Elevaciones Laterales con Mancuernas'],
+      variants: ['Laterales en polea', 'Elevaciones Laterales con Mancuernas', 'Elevaciones Laterales en Máquina'],
       sets: [
         { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
         { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
@@ -93,7 +93,7 @@ const initialWorkoutData = {
       id: 'mie-2',
       name: 'Máquina de aductores',
       muscle: 'Aductores',
-      variants: ['Máquina de aductores'],
+      variants: ['Máquina de aductores', 'Aductores en polea'],
       sets: [
         { weight: '30kg', reps: '12', rir: '' },
         { weight: '40kg', reps: '10', rir: '' },
@@ -136,7 +136,7 @@ const initialWorkoutData = {
       id: 'mie-6',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta'],
+      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -146,7 +146,7 @@ const initialWorkoutData = {
       id: 'mie-7',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion'],
+      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -210,7 +210,7 @@ const initialWorkoutData = {
       id: 'jue-6',
       name: 'Laterales en polea',
       muscle: 'Hombro',
-      variants: ['Laterales en polea'],
+      variants: ['Laterales en polea', 'Elevaciones Laterales con Mancuernas', 'Elevaciones Laterales en Máquina'],
       sets: [
         { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
         { weight: '2 ladrillos', reps: '9', rir: 'Fallo' }
@@ -220,7 +220,7 @@ const initialWorkoutData = {
       id: 'jue-7',
       name: 'Antebrazo polea baja',
       muscle: 'Antebrazo',
-      variants: ['Antebrazo polea baja'],
+      variants: ['Antebrazo polea baja', 'Curl de antebrazo con barra'],
       sets: [
         { weight: '25kg', reps: '12', rir: '' },
         { weight: '25kg', reps: '12', rir: '' }
@@ -230,7 +230,7 @@ const initialWorkoutData = {
       id: 'jue-8',
       name: 'Antebrazo polea alta',
       muscle: 'Antebrazo',
-      variants: ['Antebrazo polea alta'],
+      variants: ['Antebrazo polea alta', 'Curl invertido en polea'],
       sets: [
         { weight: '50kg', reps: '12', rir: '' },
         { weight: '50kg', reps: '12', rir: '' }
@@ -240,7 +240,7 @@ const initialWorkoutData = {
       id: 'jue-9',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta'],
+      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -250,7 +250,7 @@ const initialWorkoutData = {
       id: 'jue-10',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion'],
+      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -262,7 +262,7 @@ const initialWorkoutData = {
       id: 'vie-1',
       name: 'Máquina de gemelos',
       muscle: 'Gemelos',
-      variants: ['Máquina de gemelos'],
+      variants: ['Máquina de gemelos', 'Elevación de talones de pie'],
       sets: [
         { weight: '40kg', reps: '12', rir: '' },
         { weight: '70kg', reps: '10', rir: '' },
@@ -273,7 +273,7 @@ const initialWorkoutData = {
       id: 'vie-2',
       name: 'Máquina de aductores',
       muscle: 'Aductores',
-      variants: ['Máquina de aductores'],
+      variants: ['Máquina de aductores', 'Aductores en polea'],
       sets: [
         { weight: '30kg', reps: '12', rir: '' },
         { weight: '40kg', reps: '10', rir: '' },
@@ -305,7 +305,7 @@ const initialWorkoutData = {
       id: 'vie-5',
       name: 'Sillón de cuádriceps',
       muscle: 'Cuádriceps',
-      variants: ['Sillón de cuádriceps'],
+      variants: ['Sillón de cuádriceps', 'Sentadilla hack', 'Prensa inclinada'],
       sets: [
         { weight: '50kg', reps: '12', rir: '' },
         { weight: '80kg', reps: '10', rir: '' },
@@ -316,7 +316,7 @@ const initialWorkoutData = {
       id: 'vie-6',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta'],
+      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -326,7 +326,7 @@ const initialWorkoutData = {
       id: 'vie-7',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion'],
+      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -360,7 +360,7 @@ const initialWorkoutData = {
       id: 'sab-3',
       name: 'Peck Deck',
       muscle: 'Pecho',
-      variants: ['Peck Deck'],
+      variants: ['Peck Deck', 'Cruce de Poleas Alta', 'Aperturas con Mancuernas'],
       sets: [
         { weight: '60kg', reps: '9', rir: 'Fallo' },
         { weight: '55kg', reps: '6', rir: 'Fallo' }
@@ -370,7 +370,7 @@ const initialWorkoutData = {
       id: 'sab-4',
       name: 'Barra T',
       muscle: 'Espalda',
-      variants: ['Barra T'],
+      variants: ['Barra T', 'Remo con mancuerna'],
       sets: [
         { weight: '35kg', reps: '10', rir: '' },
         { weight: '35kg', reps: '10', rir: '' }
@@ -380,7 +380,7 @@ const initialWorkoutData = {
       id: 'sab-5',
       name: 'Laterales en polea',
       muscle: 'Hombro',
-      variants: ['Laterales en polea'],
+      variants: ['Laterales en polea', 'Elevaciones Laterales con Mancuernas', 'Elevaciones Laterales en Máquina'],
       sets: [
         { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
         { weight: '2 ladrillos', reps: '9', rir: 'Fallo' },
@@ -413,7 +413,7 @@ const initialWorkoutData = {
       id: 'sab-8',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta'],
+      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -423,7 +423,7 @@ const initialWorkoutData = {
       id: 'sab-9',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion'],
+      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -435,9 +435,9 @@ const initialWorkoutData = {
 export default function App() {
   const [selectedDay, setSelectedDay] = useState('Martes')
 
-  // Persistencia de Rutina en localStorage (si hay cambios previos los rescata, si no usa initialWorkoutData)
+  // Persistencia de Rutina en localStorage (v3)
   const [workoutData, setWorkoutData] = useState(() => {
-    const saved = localStorage.getItem('gym_workout_data_v2')
+    const saved = localStorage.getItem('gym_workout_data_v3')
     return saved ? JSON.parse(saved) : initialWorkoutData
   })
 
@@ -460,7 +460,7 @@ export default function App() {
 
   // Sincronización continua con localStorage
   useEffect(() => {
-    localStorage.setItem('gym_workout_data_v2', JSON.stringify(workoutData))
+    localStorage.setItem('gym_workout_data_v3', JSON.stringify(workoutData))
   }, [workoutData])
 
   useEffect(() => {
@@ -534,7 +534,7 @@ export default function App() {
     } else {
       setRestTargets((prev) => ({
         ...prev,
-        [exerciseId]: Date.now() + 90000 // 90 segundos a futuro
+        [exerciseId]: Date.now() + 90000 // 90 segundos
       }))
     }
   }
@@ -646,41 +646,41 @@ export default function App() {
               >
                 <div className="flex justify-between items-start gap-3">
                   <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-bold text-lg text-white tracking-tight leading-tight">
-                        {exercise.name}
-                      </h3>
-                      {exercise.variants && exercise.variants.length > 1 && (
-                        <button
-                          onClick={() => setActiveModalEx(exercise)}
-                          className="text-[10px] bg-slate-800 text-blue-400 px-2 py-0.5 rounded-md border border-slate-700 font-semibold"
-                        >
-                          Variantes ⚙️
-                        </button>
-                      )}
-                    </div>
+                    <h3 className="font-bold text-lg text-white tracking-tight leading-tight">
+                      {exercise.name}
+                    </h3>
                     <span className="text-xs font-semibold text-slate-500 mt-1 block">
                       {exercise.muscle}
                     </span>
                   </div>
 
-                  <button
-                    onClick={() => startRestTimer(exercise.id)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all ${
-                      currentRest === 'FIN'
-                        ? 'bg-emerald-500 text-slate-950 font-black animate-bounce shadow-lg shadow-emerald-500/30'
+                  {/* Grupo de Botones: Variantes + 90s Rest */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setActiveModalEx(exercise)}
+                      className="text-xs bg-slate-800 hover:bg-slate-700 text-blue-400 px-2.5 py-1.5 rounded-full border border-slate-700 font-semibold active:scale-95 transition-all"
+                    >
+                      Variantes ⚙️
+                    </button>
+
+                    <button
+                      onClick={() => startRestTimer(exercise.id)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all ${
+                        currentRest === 'FIN'
+                          ? 'bg-emerald-500 text-slate-950 font-black animate-bounce shadow-lg shadow-emerald-500/30'
+                          : currentRest
+                          ? 'bg-orange-500 text-slate-950 font-bold animate-pulse shadow-lg shadow-orange-500/20'
+                          : 'bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/10'
+                      }`}
+                    >
+                      <span>⏱</span>
+                      {currentRest === 'FIN'
+                        ? '¡LISTO! 🏋️'
                         : currentRest
-                        ? 'bg-orange-500 text-slate-950 font-bold animate-pulse shadow-lg shadow-orange-500/20'
-                        : 'bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/10'
-                    }`}
-                  >
-                    <span>⏱</span>
-                    {currentRest === 'FIN'
-                      ? '¡LISTO! 🏋️'
-                      : currentRest
-                      ? `${currentRest}s Rest`
-                      : '90s Rest'}
-                  </button>
+                        ? `${currentRest}s Rest`
+                        : '90s Rest'}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Series */}
