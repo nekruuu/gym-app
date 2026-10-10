@@ -442,8 +442,9 @@ const initialWorkoutData = {
 export default function App() {
   const [selectedDay, setSelectedDay] = useState('Martes')
 
+  // Clave v7 para refrescar y aplicar el nuevo estado visual
   const [workoutData, setWorkoutData] = useState(() => {
-    const saved = localStorage.getItem('gym_workout_data_v5')
+    const saved = localStorage.getItem('gym_workout_data_v7')
     return saved ? JSON.parse(saved) : initialWorkoutData
   })
 
@@ -461,7 +462,7 @@ export default function App() {
   const [activeModalEx, setActiveModalEx] = useState(null)
 
   useEffect(() => {
-    localStorage.setItem('gym_workout_data_v5', JSON.stringify(workoutData))
+    localStorage.setItem('gym_workout_data_v7', JSON.stringify(workoutData))
   }, [workoutData])
 
   useEffect(() => {
@@ -476,22 +477,27 @@ export default function App() {
     localStorage.setItem('gym_rest_targets', JSON.stringify(restTargets))
   }, [restTargets])
 
+  // Temporizador principal persistente por Timestamp
   useEffect(() => {
     if (!startTime) {
       setWorkoutSeconds(0)
       return
     }
+
     const interval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - startTime) / 1000)
       setWorkoutSeconds(elapsed > 0 ? elapsed : 0)
     }, 1000)
+
     return () => clearInterval(interval)
   }, [startTime])
 
+  // Temporizador de descansos por Timestamp
   useEffect(() => {
     const interval = setInterval(() => {
       const now = Date.now()
       const newDisplays = {}
+
       Object.keys(restTargets).forEach((id) => {
         const remaining = Math.ceil((restTargets[id] - now) / 1000)
         if (remaining > 0) {
@@ -500,8 +506,10 @@ export default function App() {
           newDisplays[id] = 'FIN'
         }
       })
+
       setRestDisplays(newDisplays)
     }, 1000)
+
     return () => clearInterval(interval)
   }, [restTargets])
 
@@ -572,26 +580,26 @@ export default function App() {
     setActiveModalEx(null)
   }
 
-  // Cálculo de progreso de series del día
+  // Métricas de progreso del día
   const currentExercises = workoutData[selectedDay] || []
   const totalSets = currentExercises.reduce((acc, ex) => acc + ex.sets.length, 0)
   const completedSets = currentExercises.reduce(
-    (acc, ex) => acc + ex.sets.filter((s) => s.reps && s.weight).length,
+    (acc, ex) => acc + ex.sets.filter((s) => s.reps !== '' && s.weight !== '').length,
     0
   )
   const progressPercentage = totalSets > 0 ? Math.round((completedSets / totalSets) * 100) : 0
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col pb-16 selection:bg-blue-500/30">
-      {/* Fondo con brillo ambiental */}
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/15 via-slate-950 to-slate-950 pointer-events-none z-0" />
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col pb-16">
+      {/* Resplandor ambiental de fondo */}
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950 to-slate-950 pointer-events-none z-0" />
 
-      {/* Header Fijo */}
-      <header className="sticky top-0 z-40 bg-slate-950/70 backdrop-blur-xl border-b border-slate-800/60 px-4 pt-3 pb-2 flex flex-col gap-3">
+      {/* Header Fijo Estilo Glassmorphism */}
+      <header className="sticky top-0 z-40 bg-slate-950/75 backdrop-blur-xl border-b border-slate-800/80 px-4 pt-3 pb-2.5 flex flex-col gap-3 shadow-2xl">
         <div className="flex justify-between items-center max-w-md mx-auto w-full">
-          {/* Chip de Tiempo en Vivo */}
+          {/* Chip con Cronómetro */}
           <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full shadow-inner">
-            <span className={`w-2.5 h-2.5 rounded-full ${startTime ? 'bg-emerald-500 animate-pulse' : 'bg-slate-600'}`} />
+            <span className={`w-2.5 h-2.5 rounded-full ${startTime ? 'bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500' : 'bg-slate-600'}`} />
             <span className="font-mono text-sm font-extrabold tracking-wider text-slate-200">
               {formatTime(workoutSeconds)}
             </span>
@@ -604,7 +612,7 @@ export default function App() {
             </button>
           </div>
 
-          {/* Botón Principal de Entrenamiento */}
+          {/* Botón Principal */}
           <button
             onClick={toggleTraining}
             className={`flex items-center gap-2 px-5 py-2 rounded-full font-bold text-xs tracking-wide shadow-lg transition-all active:scale-95 ${
@@ -618,7 +626,7 @@ export default function App() {
           </button>
         </div>
 
-        {/* Selector de Días */}
+        {/* Pestañas de Selector de Días */}
         <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 max-w-md mx-auto w-full">
           {['Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'].map((day) => (
             <button
@@ -638,7 +646,7 @@ export default function App() {
 
       {/* Contenido Principal */}
       <main className="relative z-10 flex-1 px-4 py-5 flex flex-col gap-5 max-w-md mx-auto w-full">
-        {/* Banner de Título & Barra de Progreso */}
+        {/* Banner de Título de Rutina & Barra Visual de Progreso */}
         <div className="bg-gradient-to-br from-slate-900/90 to-slate-900/40 border border-slate-800/80 rounded-2xl p-4 shadow-xl backdrop-blur-md flex flex-col gap-3">
           <div className="flex justify-between items-end">
             <div>
@@ -656,7 +664,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* Barra Visual de Progreso */}
+          {/* Barra Visual de Progreso Dinámica */}
           <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800/60 p-0.5">
             <div
               className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500 shadow-sm shadow-blue-500/50"
@@ -675,7 +683,7 @@ export default function App() {
                 key={exercise.id}
                 className="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 shadow-xl backdrop-blur-xl flex flex-col gap-4 hover:border-slate-700/60 transition-all"
               >
-                {/* Encabezado del Ejercicio */}
+                {/* Cabecera del Ejercicio */}
                 <div className="flex justify-between items-start gap-3">
                   <div className="flex-1 min-w-0">
                     <h3 className="font-extrabold text-base text-white tracking-tight truncate leading-snug">
@@ -686,7 +694,7 @@ export default function App() {
                     </span>
                   </div>
 
-                  {/* Acciones: Variantes & Temporizador */}
+                  {/* Botones de Acción: Variantes & Descanso */}
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       onClick={() => setActiveModalEx(exercise)}
@@ -771,7 +779,7 @@ export default function App() {
         </div>
       </main>
 
-      {/* Modal Desplegable de Variantes */}
+      {/* Modal Flotante de Variantes */}
       {activeModalEx && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
           <div className="bg-slate-900 border border-slate-800/90 rounded-3xl w-full max-w-sm p-6 flex flex-col gap-4 shadow-2xl shadow-blue-500/10">

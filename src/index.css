@@ -2,18 +2,31 @@
 
 @layer base {
   html, body {
-    background-color: #020617; /* bg-slate-950 puro */
+    background-color: #020617;
     color: #f8fafc;
     -webkit-tap-highlight-color: transparent;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
 }
 
+/* Evita zoom automático en Safari iOS */
 input {
   font-size: 16px !important;
 }
 
+/* Ocultar flechas de números */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
