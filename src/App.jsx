@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react'
 
-// Rutina con variantes actualizadas para Barra T, Hombros y botón posicionado junto a Rest
+// Subtítulos por grupo muscular
+const dayTitles = {
+  Martes: 'Pecho, Hombros y Tríceps',
+  Miércoles: 'Pierna Completa',
+  Jueves: 'Espalda, Bíceps y Antebrazo',
+  Viernes: 'Pierna y Enfoque Femoral',
+  Sábado: 'Torso Completo'
+}
+
+// Rutina base completa con variantes y abdominales al final
 const initialWorkoutData = {
   Martes: [
     {
@@ -93,7 +102,7 @@ const initialWorkoutData = {
       id: 'mie-2',
       name: 'Máquina de aductores',
       muscle: 'Aductores',
-      variants: ['Máquina de aductores', 'Aductores en polea'],
+      variants: ['Máquina de aductores'],
       sets: [
         { weight: '30kg', reps: '12', rir: '' },
         { weight: '40kg', reps: '10', rir: '' },
@@ -136,7 +145,7 @@ const initialWorkoutData = {
       id: 'mie-6',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
+      variants: ['Abdominales en polea alta'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -146,7 +155,7 @@ const initialWorkoutData = {
       id: 'mie-7',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
+      variants: ['Elevaciones de piernas en inclinacion'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -220,7 +229,7 @@ const initialWorkoutData = {
       id: 'jue-7',
       name: 'Antebrazo polea baja',
       muscle: 'Antebrazo',
-      variants: ['Antebrazo polea baja', 'Curl de antebrazo con barra'],
+      variants: ['Antebrazo polea baja'],
       sets: [
         { weight: '25kg', reps: '12', rir: '' },
         { weight: '25kg', reps: '12', rir: '' }
@@ -230,7 +239,7 @@ const initialWorkoutData = {
       id: 'jue-8',
       name: 'Antebrazo polea alta',
       muscle: 'Antebrazo',
-      variants: ['Antebrazo polea alta', 'Curl invertido en polea'],
+      variants: ['Antebrazo polea alta'],
       sets: [
         { weight: '50kg', reps: '12', rir: '' },
         { weight: '50kg', reps: '12', rir: '' }
@@ -240,7 +249,7 @@ const initialWorkoutData = {
       id: 'jue-9',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
+      variants: ['Abdominales en polea alta'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -250,7 +259,7 @@ const initialWorkoutData = {
       id: 'jue-10',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
+      variants: ['Elevaciones de piernas en inclinacion'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -262,7 +271,7 @@ const initialWorkoutData = {
       id: 'vie-1',
       name: 'Máquina de gemelos',
       muscle: 'Gemelos',
-      variants: ['Máquina de gemelos', 'Elevación de talones de pie'],
+      variants: ['Máquina de gemelos'],
       sets: [
         { weight: '40kg', reps: '12', rir: '' },
         { weight: '70kg', reps: '10', rir: '' },
@@ -273,7 +282,7 @@ const initialWorkoutData = {
       id: 'vie-2',
       name: 'Máquina de aductores',
       muscle: 'Aductores',
-      variants: ['Máquina de aductores', 'Aductores en polea'],
+      variants: ['Máquina de aductores'],
       sets: [
         { weight: '30kg', reps: '12', rir: '' },
         { weight: '40kg', reps: '10', rir: '' },
@@ -305,7 +314,7 @@ const initialWorkoutData = {
       id: 'vie-5',
       name: 'Sillón de cuádriceps',
       muscle: 'Cuádriceps',
-      variants: ['Sillón de cuádriceps', 'Sentadilla hack', 'Prensa inclinada'],
+      variants: ['Sillón de cuádriceps'],
       sets: [
         { weight: '50kg', reps: '12', rir: '' },
         { weight: '80kg', reps: '10', rir: '' },
@@ -316,7 +325,7 @@ const initialWorkoutData = {
       id: 'vie-6',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
+      variants: ['Abdominales en polea alta'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -326,7 +335,7 @@ const initialWorkoutData = {
       id: 'vie-7',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
+      variants: ['Elevaciones de piernas en inclinacion'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -360,7 +369,7 @@ const initialWorkoutData = {
       id: 'sab-3',
       name: 'Peck Deck',
       muscle: 'Pecho',
-      variants: ['Peck Deck', 'Cruce de Poleas Alta', 'Aperturas con Mancuernas'],
+      variants: ['Peck Deck'],
       sets: [
         { weight: '60kg', reps: '9', rir: 'Fallo' },
         { weight: '55kg', reps: '6', rir: 'Fallo' }
@@ -413,7 +422,7 @@ const initialWorkoutData = {
       id: 'sab-8',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
+      variants: ['Abdominales en polea alta'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -423,7 +432,7 @@ const initialWorkoutData = {
       id: 'sab-9',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
+      variants: ['Elevaciones de piernas en inclinacion'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -435,32 +444,28 @@ const initialWorkoutData = {
 export default function App() {
   const [selectedDay, setSelectedDay] = useState('Martes')
 
-  // Persistencia de Rutina en localStorage (v3)
+  // Persistencia con clave de actualización
   const [workoutData, setWorkoutData] = useState(() => {
-    const saved = localStorage.getItem('gym_workout_data_v3')
+    const saved = localStorage.getItem('gym_workout_data_v4')
     return saved ? JSON.parse(saved) : initialWorkoutData
   })
 
-  // Control del Temporizador de Entrenamiento con Timestamp
   const [startTime, setStartTime] = useState(() => {
     const savedTime = localStorage.getItem('gym_start_time')
     return savedTime ? Number(savedTime) : null
   })
   const [workoutSeconds, setWorkoutSeconds] = useState(0)
 
-  // Control del Timer de Descanso con Timestamps por ejercicio
   const [restTargets, setRestTargets] = useState(() => {
     const savedRests = localStorage.getItem('gym_rest_targets')
     return savedRests ? JSON.parse(savedRests) : {}
   })
   const [restDisplays, setRestDisplays] = useState({})
 
-  // Modal para Variantes de Ejercicios
   const [activeModalEx, setActiveModalEx] = useState(null)
 
-  // Sincronización continua con localStorage
   useEffect(() => {
-    localStorage.setItem('gym_workout_data_v3', JSON.stringify(workoutData))
+    localStorage.setItem('gym_workout_data_v4', JSON.stringify(workoutData))
   }, [workoutData])
 
   useEffect(() => {
@@ -475,7 +480,7 @@ export default function App() {
     localStorage.setItem('gym_rest_targets', JSON.stringify(restTargets))
   }, [restTargets])
 
-  // Temporizador principal de entrenamiento (basado en Date.now())
+  // Timer de entrenamiento por timestamps
   useEffect(() => {
     if (!startTime) {
       setWorkoutSeconds(0)
@@ -490,7 +495,7 @@ export default function App() {
     return () => clearInterval(interval)
   }, [startTime])
 
-  // Temporizador de descanso (basado en Date.now())
+  // Timer de descanso por timestamps
   useEffect(() => {
     const interval = setInterval(() => {
       const now = Date.now()
@@ -534,7 +539,7 @@ export default function App() {
     } else {
       setRestTargets((prev) => ({
         ...prev,
-        [exerciseId]: Date.now() + 90000 // 90 segundos
+        [exerciseId]: Date.now() + 90000
       }))
     }
   }
@@ -632,6 +637,9 @@ export default function App() {
       <main className="flex-1 px-4 py-4 flex flex-col gap-6 max-w-md mx-auto w-full">
         <div>
           <h1 className="text-2xl font-black tracking-tight text-white">{selectedDay}</h1>
+          <p className="text-xs font-semibold text-blue-400 uppercase tracking-wider mt-0.5">
+            {dayTitles[selectedDay]}
+          </p>
         </div>
 
         {/* Lista de Ejercicios */}
