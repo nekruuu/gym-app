@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 
-// Subtítulos por grupo muscular
 const dayTitles = {
   Martes: 'Pecho, Hombros y Tríceps',
   Miércoles: 'Pierna Completa',
@@ -9,7 +8,6 @@ const dayTitles = {
   Sábado: 'Torso Completo'
 }
 
-// Rutina base completa con variantes y abdominales al final
 const initialWorkoutData = {
   Martes: [
     {
@@ -102,7 +100,7 @@ const initialWorkoutData = {
       id: 'mie-2',
       name: 'Máquina de aductores',
       muscle: 'Aductores',
-      variants: ['Máquina de aductores'],
+      variants: ['Máquina de aductores', 'Aductores en polea'],
       sets: [
         { weight: '30kg', reps: '12', rir: '' },
         { weight: '40kg', reps: '10', rir: '' },
@@ -145,7 +143,7 @@ const initialWorkoutData = {
       id: 'mie-6',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta'],
+      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -155,7 +153,7 @@ const initialWorkoutData = {
       id: 'mie-7',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion'],
+      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -229,7 +227,7 @@ const initialWorkoutData = {
       id: 'jue-7',
       name: 'Antebrazo polea baja',
       muscle: 'Antebrazo',
-      variants: ['Antebrazo polea baja'],
+      variants: ['Antebrazo polea baja', 'Curl de antebrazo con barra'],
       sets: [
         { weight: '25kg', reps: '12', rir: '' },
         { weight: '25kg', reps: '12', rir: '' }
@@ -239,7 +237,7 @@ const initialWorkoutData = {
       id: 'jue-8',
       name: 'Antebrazo polea alta',
       muscle: 'Antebrazo',
-      variants: ['Antebrazo polea alta'],
+      variants: ['Antebrazo polea alta', 'Curl invertido en polea'],
       sets: [
         { weight: '50kg', reps: '12', rir: '' },
         { weight: '50kg', reps: '12', rir: '' }
@@ -249,7 +247,7 @@ const initialWorkoutData = {
       id: 'jue-9',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta'],
+      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -259,7 +257,7 @@ const initialWorkoutData = {
       id: 'jue-10',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion'],
+      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -271,7 +269,7 @@ const initialWorkoutData = {
       id: 'vie-1',
       name: 'Máquina de gemelos',
       muscle: 'Gemelos',
-      variants: ['Máquina de gemelos'],
+      variants: ['Máquina de gemelos', 'Elevación de talones de pie'],
       sets: [
         { weight: '40kg', reps: '12', rir: '' },
         { weight: '70kg', reps: '10', rir: '' },
@@ -282,7 +280,7 @@ const initialWorkoutData = {
       id: 'vie-2',
       name: 'Máquina de aductores',
       muscle: 'Aductores',
-      variants: ['Máquina de aductores'],
+      variants: ['Máquina de aductores', 'Aductores en polea'],
       sets: [
         { weight: '30kg', reps: '12', rir: '' },
         { weight: '40kg', reps: '10', rir: '' },
@@ -314,7 +312,7 @@ const initialWorkoutData = {
       id: 'vie-5',
       name: 'Sillón de cuádriceps',
       muscle: 'Cuádriceps',
-      variants: ['Sillón de cuádriceps'],
+      variants: ['Sillón de cuádriceps', 'Sentadilla hack', 'Prensa inclinada'],
       sets: [
         { weight: '50kg', reps: '12', rir: '' },
         { weight: '80kg', reps: '10', rir: '' },
@@ -325,7 +323,7 @@ const initialWorkoutData = {
       id: 'vie-6',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta'],
+      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -335,7 +333,7 @@ const initialWorkoutData = {
       id: 'vie-7',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion'],
+      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -369,7 +367,7 @@ const initialWorkoutData = {
       id: 'sab-3',
       name: 'Peck Deck',
       muscle: 'Pecho',
-      variants: ['Peck Deck'],
+      variants: ['Peck Deck', 'Cruce de Poleas Alta', 'Aperturas con Mancuernas'],
       sets: [
         { weight: '60kg', reps: '9', rir: 'Fallo' },
         { weight: '55kg', reps: '6', rir: 'Fallo' }
@@ -422,7 +420,7 @@ const initialWorkoutData = {
       id: 'sab-8',
       name: 'Abdominales en polea alta',
       muscle: 'Abdomen',
-      variants: ['Abdominales en polea alta'],
+      variants: ['Abdominales en polea alta', 'Crunches en Esterilla'],
       sets: [
         { weight: '50kg', reps: '15', rir: 'Fallo' },
         { weight: '50kg', reps: '15', rir: 'Fallo' }
@@ -432,7 +430,7 @@ const initialWorkoutData = {
       id: 'sab-9',
       name: 'Elevaciones de piernas en inclinacion',
       muscle: 'Abdomen',
-      variants: ['Elevaciones de piernas en inclinacion'],
+      variants: ['Elevaciones de piernas en inclinacion', 'Elevación de piernas colgado'],
       sets: [
         { weight: 'Corporal', reps: '12', rir: 'Fallo' },
         { weight: 'Corporal', reps: '12', rir: 'Fallo' }
@@ -444,9 +442,8 @@ const initialWorkoutData = {
 export default function App() {
   const [selectedDay, setSelectedDay] = useState('Martes')
 
-  // Persistencia con clave de actualización
   const [workoutData, setWorkoutData] = useState(() => {
-    const saved = localStorage.getItem('gym_workout_data_v4')
+    const saved = localStorage.getItem('gym_workout_data_v5')
     return saved ? JSON.parse(saved) : initialWorkoutData
   })
 
@@ -461,11 +458,10 @@ export default function App() {
     return savedRests ? JSON.parse(savedRests) : {}
   })
   const [restDisplays, setRestDisplays] = useState({})
-
   const [activeModalEx, setActiveModalEx] = useState(null)
 
   useEffect(() => {
-    localStorage.setItem('gym_workout_data_v4', JSON.stringify(workoutData))
+    localStorage.setItem('gym_workout_data_v5', JSON.stringify(workoutData))
   }, [workoutData])
 
   useEffect(() => {
@@ -480,27 +476,22 @@ export default function App() {
     localStorage.setItem('gym_rest_targets', JSON.stringify(restTargets))
   }, [restTargets])
 
-  // Timer de entrenamiento por timestamps
   useEffect(() => {
     if (!startTime) {
       setWorkoutSeconds(0)
       return
     }
-
     const interval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - startTime) / 1000)
       setWorkoutSeconds(elapsed > 0 ? elapsed : 0)
     }, 1000)
-
     return () => clearInterval(interval)
   }, [startTime])
 
-  // Timer de descanso por timestamps
   useEffect(() => {
     const interval = setInterval(() => {
       const now = Date.now()
       const newDisplays = {}
-
       Object.keys(restTargets).forEach((id) => {
         const remaining = Math.ceil((restTargets[id] - now) / 1000)
         if (remaining > 0) {
@@ -509,10 +500,8 @@ export default function App() {
           newDisplays[id] = 'FIN'
         }
       })
-
       setRestDisplays(newDisplays)
     }, 1000)
-
     return () => clearInterval(interval)
   }, [restTargets])
 
@@ -583,48 +572,62 @@ export default function App() {
     setActiveModalEx(null)
   }
 
+  // Cálculo de progreso de series del día
+  const currentExercises = workoutData[selectedDay] || []
+  const totalSets = currentExercises.reduce((acc, ex) => acc + ex.sets.length, 0)
+  const completedSets = currentExercises.reduce(
+    (acc, ex) => acc + ex.sets.filter((s) => s.reps && s.weight).length,
+    0
+  )
+  const progressPercentage = totalSets > 0 ? Math.round((completedSets / totalSets) * 100) : 0
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col pb-12 safe-bottom">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col pb-16 selection:bg-blue-500/30">
+      {/* Fondo con brillo ambiental */}
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/15 via-slate-950 to-slate-950 pointer-events-none z-0" />
+
       {/* Header Fijo */}
-      <header className="px-4 pt-3 pb-2 bg-slate-950/80 backdrop-blur-md sticky top-0 z-30 border-b border-slate-900/60 flex flex-col gap-3">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <span className="text-red-500 animate-pulse text-lg">⏱</span>
-            <span className="font-mono text-xl font-bold tracking-tight">
+      <header className="sticky top-0 z-40 bg-slate-950/70 backdrop-blur-xl border-b border-slate-800/60 px-4 pt-3 pb-2 flex flex-col gap-3">
+        <div className="flex justify-between items-center max-w-md mx-auto w-full">
+          {/* Chip de Tiempo en Vivo */}
+          <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full shadow-inner">
+            <span className={`w-2.5 h-2.5 rounded-full ${startTime ? 'bg-emerald-500 animate-pulse' : 'bg-slate-600'}`} />
+            <span className="font-mono text-sm font-extrabold tracking-wider text-slate-200">
               {formatTime(workoutSeconds)}
             </span>
             <button
               onClick={resetTimer}
               title="Reiniciar contador"
-              className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded-full border border-slate-700 transition-all active:scale-90"
+              className="text-xs text-slate-400 hover:text-white transition-colors ml-1 active:scale-90"
             >
               ↺
             </button>
           </div>
 
+          {/* Botón Principal de Entrenamiento */}
           <button
             onClick={toggleTraining}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm shadow-md transition-transform active:scale-95 ${
+            className={`flex items-center gap-2 px-5 py-2 rounded-full font-bold text-xs tracking-wide shadow-lg transition-all active:scale-95 ${
               startTime
-                ? 'bg-red-500 text-white hover:bg-red-600'
-                : 'bg-white text-slate-950 hover:bg-slate-200'
+                ? 'bg-gradient-to-r from-red-500 to-rose-600 text-white shadow-red-500/25 ring-2 ring-red-500/30'
+                : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-blue-600/30 ring-2 ring-blue-500/30'
             }`}
           >
             <span>{startTime ? '⏸' : '▶'}</span>
-            {startTime ? 'Pausar' : 'Iniciar Entrenamiento'}
+            {startTime ? 'Pausar' : 'Iniciar Sesión'}
           </button>
         </div>
 
         {/* Selector de Días */}
-        <div className="flex gap-2 overflow-x-auto no-scrollbar py-1">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 max-w-md mx-auto w-full">
           {['Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'].map((day) => (
             <button
               key={day}
               onClick={() => setSelectedDay(day)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap active:scale-95 ${
                 selectedDay === day
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-                  : 'bg-slate-900 text-slate-400 border border-slate-800'
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/40 ring-1 ring-blue-400/50'
+                  : 'bg-slate-900/80 text-slate-400 border border-slate-800/80 hover:bg-slate-800'
               }`}
             >
               {day}
@@ -634,66 +637,87 @@ export default function App() {
       </header>
 
       {/* Contenido Principal */}
-      <main className="flex-1 px-4 py-4 flex flex-col gap-6 max-w-md mx-auto w-full">
-        <div>
-          <h1 className="text-2xl font-black tracking-tight text-white">{selectedDay}</h1>
-          <p className="text-xs font-semibold text-blue-400 uppercase tracking-wider mt-0.5">
-            {dayTitles[selectedDay]}
-          </p>
+      <main className="relative z-10 flex-1 px-4 py-5 flex flex-col gap-5 max-w-md mx-auto w-full">
+        {/* Banner de Título & Barra de Progreso */}
+        <div className="bg-gradient-to-br from-slate-900/90 to-slate-900/40 border border-slate-800/80 rounded-2xl p-4 shadow-xl backdrop-blur-md flex flex-col gap-3">
+          <div className="flex justify-between items-end">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-widest text-blue-400 block mb-0.5">
+                {selectedDay}
+              </span>
+              <h1 className="text-xl font-black text-white tracking-tight leading-none">
+                {dayTitles[selectedDay]}
+              </h1>
+            </div>
+            <div className="text-right">
+              <span className="text-xs font-bold text-slate-400">
+                {completedSets}/{totalSets} series
+              </span>
+            </div>
+          </div>
+
+          {/* Barra Visual de Progreso */}
+          <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800/60 p-0.5">
+            <div
+              className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500 shadow-sm shadow-blue-500/50"
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
         </div>
 
         {/* Lista de Ejercicios */}
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4">
           {workoutData[selectedDay]?.map((exercise) => {
             const currentRest = restDisplays[exercise.id]
 
             return (
               <div
                 key={exercise.id}
-                className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 shadow-xl flex flex-col gap-4 backdrop-blur-sm"
+                className="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 shadow-xl backdrop-blur-xl flex flex-col gap-4 hover:border-slate-700/60 transition-all"
               >
+                {/* Encabezado del Ejercicio */}
                 <div className="flex justify-between items-start gap-3">
-                  <div>
-                    <h3 className="font-bold text-lg text-white tracking-tight leading-tight">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-extrabold text-base text-white tracking-tight truncate leading-snug">
                       {exercise.name}
                     </h3>
-                    <span className="text-xs font-semibold text-slate-500 mt-1 block">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-950/60 px-2 py-0.5 rounded-md border border-slate-800/50 mt-1">
                       {exercise.muscle}
                     </span>
                   </div>
 
-                  {/* Grupo de Botones: Variantes + 90s Rest */}
-                  <div className="flex items-center gap-2">
+                  {/* Acciones: Variantes & Temporizador */}
+                  <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       onClick={() => setActiveModalEx(exercise)}
-                      className="text-xs bg-slate-800 hover:bg-slate-700 text-blue-400 px-2.5 py-1.5 rounded-full border border-slate-700 font-semibold active:scale-95 transition-all"
+                      className="text-[11px] bg-slate-800/80 hover:bg-slate-700/80 text-blue-400 px-2.5 py-1.5 rounded-full border border-slate-700/70 font-semibold active:scale-95 transition-all shadow-sm"
                     >
                       Variantes ⚙️
                     </button>
 
                     <button
                       onClick={() => startRestTimer(exercise.id)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all ${
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-bold active:scale-95 transition-all shadow-sm ${
                         currentRest === 'FIN'
-                          ? 'bg-emerald-500 text-slate-950 font-black animate-bounce shadow-lg shadow-emerald-500/30'
+                          ? 'bg-emerald-500 text-slate-950 font-black animate-bounce shadow-emerald-500/40 ring-2 ring-emerald-400'
                           : currentRest
-                          ? 'bg-orange-500 text-slate-950 font-bold animate-pulse shadow-lg shadow-orange-500/20'
-                          : 'bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/10'
+                          ? 'bg-amber-500 text-slate-950 font-extrabold animate-pulse shadow-amber-500/30'
+                          : 'bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20'
                       }`}
                     >
                       <span>⏱</span>
                       {currentRest === 'FIN'
-                        ? '¡LISTO! 🏋️'
+                        ? '¡LISTO!'
                         : currentRest
-                        ? `${currentRest}s Rest`
+                        ? `${currentRest}s`
                         : '90s Rest'}
                     </button>
                   </div>
                 </div>
 
-                {/* Series */}
-                <div className="flex flex-col gap-3">
-                  <div className="grid grid-cols-12 gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">
+                {/* Grid de Series */}
+                <div className="flex flex-col gap-2">
+                  <div className="grid grid-cols-12 gap-2 text-[9px] font-black text-slate-500 uppercase tracking-widest px-1">
                     <span className="col-span-2 text-center">SERIE</span>
                     <span className="col-span-4 text-center">CARGA</span>
                     <span className="col-span-3 text-center">REPS</span>
@@ -703,39 +727,39 @@ export default function App() {
                   {exercise.sets.map((set, index) => (
                     <div
                       key={index}
-                      className="grid grid-cols-12 gap-2 items-center bg-slate-950/40 p-1.5 rounded-xl border border-slate-900/50"
+                      className="grid grid-cols-12 gap-2 items-center bg-slate-950/60 p-1.5 rounded-xl border border-slate-900/80 hover:border-slate-800 transition-colors"
                     >
                       <span className="col-span-2 text-center font-bold text-xs text-slate-400">
                         S{index + 1}
                       </span>
 
-                      <div className="col-span-4 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-2 flex items-center justify-between focus-within:border-blue-500/50">
+                      <div className="col-span-4 bg-slate-900/90 border border-slate-800/80 rounded-lg py-1.5 px-2 flex items-center justify-between focus-within:border-blue-500/70 focus-within:ring-1 focus-within:ring-blue-500/50 transition-all">
                         <input
                           type="text"
                           placeholder="0"
                           value={set.weight || ''}
                           onChange={(e) => updateSet(exercise.id, index, 'weight', e.target.value)}
-                          className="w-full bg-transparent text-center font-bold text-white text-xs focus:outline-none"
+                          className="w-full bg-transparent text-center font-mono font-bold text-white text-xs focus:outline-none"
                         />
                       </div>
 
-                      <div className="col-span-3 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-1 focus-within:border-blue-500/50">
+                      <div className="col-span-3 bg-slate-900/90 border border-slate-800/80 rounded-lg py-1.5 px-1 focus-within:border-blue-500/70 focus-within:ring-1 focus-within:ring-blue-500/50 transition-all">
                         <input
                           type="text"
                           placeholder="0"
                           value={set.reps || ''}
                           onChange={(e) => updateSet(exercise.id, index, 'reps', e.target.value)}
-                          className="w-full bg-transparent text-center font-bold text-white text-xs focus:outline-none"
+                          className="w-full bg-transparent text-center font-mono font-bold text-white text-xs focus:outline-none"
                         />
                       </div>
 
-                      <div className="col-span-3 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-1 focus-within:border-blue-500/50">
+                      <div className="col-span-3 bg-slate-900/90 border border-slate-800/80 rounded-lg py-1.5 px-1 focus-within:border-blue-500/70 focus-within:ring-1 focus-within:ring-blue-500/50 transition-all">
                         <input
                           type="text"
                           placeholder="RIR 0"
                           value={set.rir || ''}
                           onChange={(e) => updateSet(exercise.id, index, 'rir', e.target.value)}
-                          className="w-full bg-transparent text-center font-bold text-white text-xs focus:outline-none"
+                          className="w-full bg-transparent text-center font-mono font-bold text-white text-xs focus:outline-none"
                         />
                       </div>
                     </div>
@@ -749,20 +773,22 @@ export default function App() {
 
       {/* Modal Desplegable de Variantes */}
       {activeModalEx && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-5 flex flex-col gap-4">
-            <h3 className="text-lg font-bold text-white">Seleccionar Variante</h3>
-            <p className="text-xs text-slate-400">Selecciona el ejercicio que vas a realizar hoy:</p>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800/90 rounded-3xl w-full max-w-sm p-6 flex flex-col gap-4 shadow-2xl shadow-blue-500/10">
+            <div>
+              <h3 className="text-lg font-black text-white tracking-tight">Cambiar Variante</h3>
+              <p className="text-xs text-slate-400 mt-0.5">Selecciona el movimiento de hoy:</p>
+            </div>
 
-            <div className="flex flex-col gap-2 my-2">
+            <div className="flex flex-col gap-2.5 my-1">
               {activeModalEx.variants?.map((variant, idx) => (
                 <button
                   key={idx}
                   onClick={() => selectVariant(activeModalEx.id, variant)}
-                  className={`p-3 rounded-xl text-left text-sm font-semibold transition-all ${
+                  className={`p-3.5 rounded-2xl text-left text-xs font-bold transition-all active:scale-98 ${
                     activeModalEx.name === variant
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30 ring-1 ring-blue-400'
+                      : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 border border-slate-700/50'
                   }`}
                 >
                   {variant}
@@ -772,7 +798,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveModalEx(null)}
-              className="mt-2 text-xs text-slate-400 text-center py-2 underline"
+              className="mt-1 text-xs font-semibold text-slate-400 hover:text-white text-center py-2 transition-colors"
             >
               Cancelar
             </button>
