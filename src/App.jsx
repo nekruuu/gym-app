@@ -5,6 +5,9 @@ export default function App() {
   const [isTraining, setIsTraining] = useState(false)
   const [workoutSeconds, setWorkoutSeconds] = useState(0)
 
+  // Estado para controlar los descansos independientes por ejercicio
+  const [restTimers, setRestTimers] = useState({})
+
   // Datos completos de tu rutina semanal
   const [workoutData, setWorkoutData] = useState({
     Martes: [
@@ -352,7 +355,6 @@ export default function App() {
     ]
   })
 
-  // Nombres descriptivos de las rutinas por día
   const dayTitles = {
     Martes: 'Pecho, Hombros y Tríceps',
     Miércoles: 'Pierna Completa',
@@ -361,7 +363,7 @@ export default function App() {
     Sábado: 'Torso Completo'
   }
 
-  // Timer del entrenamiento
+  // Timer general del entrenamiento
   useEffect(() => {
     let interval = null
     if (isTraining) {
@@ -373,6 +375,51 @@ export default function App() {
     }
     return () => clearInterval(interval)
   }, [isTraining])
+
+  // Manejo de los temporizadores de descanso de 90 segundos
+  useEffect(() => {
+    const timerKeys = Object.keys(restTimers)
+    if (timerKeys.length === 0) return
+
+    const interval = setInterval(() => {
+      setRestTimers((prev) => {
+        const nextTimers = { ...prev }
+        let updated = false
+
+        Object.keys(nextTimers).forEach((id) => {
+          if (nextTimers[id] > 1) {
+            nextTimers[id] = nextTimers[id] - 1
+            updated = true
+          } else if (nextTimers[id] === 1) {
+            // El tiempo llegó a 0: Hacer vibrar 2 veces
+            if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+              navigator.vibrate([200, 100, 200]) // Vibrar 200ms, pausa 100ms, vibrar 200ms
+            }
+            delete nextTimers[id] // Elimina el timer y reinicia el botón
+            updated = true
+          }
+        })
+
+        return updated ? nextTimers : prev
+      })
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [restTimers])
+
+  const startRestTimer = (exerciseId) => {
+    // Si ya está activo, cancelarlo/reiniciarlo
+    if (restTimers[exerciseId]) {
+      setRestTimers((prev) => {
+        const copy = { ...prev }
+        delete copy[exerciseId]
+        return copy
+      })
+    } else {
+      // Iniciar en 90 segundos
+      setRestTimers((prev) => ({ ...prev, [exerciseId]: 90 }))
+    }
+  }
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
@@ -455,78 +502,91 @@ export default function App() {
 
         {/* Lista de Ejercicios */}
         <div className="flex flex-col gap-5">
-          {workoutData[selectedDay]?.map((exercise) => (
-            <div
-              key={exercise.id}
-              className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 shadow-xl flex flex-col gap-4 backdrop-blur-sm"
-            >
-              <div className="flex justify-between items-start gap-3">
-                <div>
-                  <h3 className="font-bold text-lg text-white tracking-tight leading-tight">
-                    {exercise.name}
-                  </h3>
-                  <span className="text-xs font-semibold text-slate-500 mt-1 block">
-                    {exercise.muscle}
-                  </span>
-                </div>
+          {workoutData[selectedDay]?.map((exercise) => {
+            const currentRest = restTimers[exercise.id]
 
-                <button className="flex items-center gap-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/10 px-3 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all">
-                  <span>⏱</span> 90s Rest
-                </button>
-              </div>
-
-              {/* Filas de Series */}
-              <div className="flex flex-col gap-3">
-                <div className="grid grid-cols-12 gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">
-                  <span className="col-span-2 text-center">SERIE</span>
-                  <span className="col-span-4 text-center">CARGA</span>
-                  <span className="col-span-3 text-center">REPS</span>
-                  <span className="col-span-3 text-center">RIR</span>
-                </div>
-
-                {exercise.sets.map((set, index) => (
-                  <div
-                    key={index}
-                    className="grid grid-cols-12 gap-2 items-center bg-slate-950/40 p-1.5 rounded-xl border border-slate-900/50"
-                  >
-                    <span className="col-span-2 text-center font-bold text-xs text-slate-400">
-                      S{index + 1}
+            return (
+              <div
+                key={exercise.id}
+                className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 shadow-xl flex flex-col gap-4 backdrop-blur-sm"
+              >
+                <div className="flex justify-between items-start gap-3">
+                  <div>
+                    <h3 className="font-bold text-lg text-white tracking-tight leading-tight">
+                      {exercise.name}
+                    </h3>
+                    <span className="text-xs font-semibold text-slate-500 mt-1 block">
+                      {exercise.muscle}
                     </span>
-
-                    <div className="col-span-4 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-2 flex items-center justify-between focus-within:border-blue-500/50">
-                      <input
-                        type="text"
-                        placeholder="0"
-                        value={set.weight || ''}
-                        onChange={(e) => updateSet(exercise.id, index, 'weight', e.target.value)}
-                        className="w-full bg-transparent text-center font-bold text-white text-xs focus:outline-none"
-                      />
-                    </div>
-
-                    <div className="col-span-3 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-1 focus-within:border-blue-500/50">
-                      <input
-                        type="text"
-                        placeholder="0"
-                        value={set.reps || ''}
-                        onChange={(e) => updateSet(exercise.id, index, 'reps', e.target.value)}
-                        className="w-full bg-transparent text-center font-bold text-white text-xs focus:outline-none"
-                      />
-                    </div>
-
-                    <div className="col-span-3 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-1 focus-within:border-blue-500/50">
-                      <input
-                        type="text"
-                        placeholder="RIR 0"
-                        value={set.rir || ''}
-                        onChange={(e) => updateSet(exercise.id, index, 'rir', e.target.value)}
-                        className="w-full bg-transparent text-center font-bold text-white text-xs focus:outline-none"
-                      />
-                    </div>
                   </div>
-                ))}
+
+                  {/* Botón de descanso interactivo */}
+                  <button
+                    onClick={() => startRestTimer(exercise.id)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all ${
+                      currentRest
+                        ? 'bg-orange-500 text-slate-950 font-bold animate-pulse shadow-lg shadow-orange-500/20'
+                        : 'bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/10'
+                    }`}
+                  >
+                    <span>⏱</span>
+                    {currentRest ? `${currentRest}s Rest` : '90s Rest'}
+                  </button>
+                </div>
+
+                {/* Filas de Series */}
+                <div className="flex flex-col gap-3">
+                  <div className="grid grid-cols-12 gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">
+                    <span className="col-span-2 text-center">SERIE</span>
+                    <span className="col-span-4 text-center">CARGA</span>
+                    <span className="col-span-3 text-center">REPS</span>
+                    <span className="col-span-3 text-center">RIR</span>
+                  </div>
+
+                  {exercise.sets.map((set, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-12 gap-2 items-center bg-slate-950/40 p-1.5 rounded-xl border border-slate-900/50"
+                    >
+                      <span className="col-span-2 text-center font-bold text-xs text-slate-400">
+                        S{index + 1}
+                      </span>
+
+                      <div className="col-span-4 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-2 flex items-center justify-between focus-within:border-blue-500/50">
+                        <input
+                          type="text"
+                          placeholder="0"
+                          value={set.weight || ''}
+                          onChange={(e) => updateSet(exercise.id, index, 'weight', e.target.value)}
+                          className="w-full bg-transparent text-center font-bold text-white text-xs focus:outline-none"
+                        />
+                      </div>
+
+                      <div className="col-span-3 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-1 focus-within:border-blue-500/50">
+                        <input
+                          type="text"
+                          placeholder="0"
+                          value={set.reps || ''}
+                          onChange={(e) => updateSet(exercise.id, index, 'reps', e.target.value)}
+                          className="w-full bg-transparent text-center font-bold text-white text-xs focus:outline-none"
+                        />
+                      </div>
+
+                      <div className="col-span-3 bg-slate-900/80 border border-slate-800 rounded-lg py-1.5 px-1 focus-within:border-blue-500/50">
+                        <input
+                          type="text"
+                          placeholder="RIR 0"
+                          value={set.rir || ''}
+                          onChange={(e) => updateSet(exercise.id, index, 'rir', e.target.value)}
+                          className="w-full bg-transparent text-center font-bold text-white text-xs focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </main>
     </div>
